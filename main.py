@@ -26,7 +26,11 @@ class NFCReader():
 		data, sw1, sw2 = self.connection.transmit(SELECT)
 
 		if(sw1, sw2) == (0x90, 0x00):
-			return toHexString(data)
+			nfc_Id = "".join('{:02x}:'.format(data[i])
+					for i in range(len(data)))[:-1]
+			# get rid of trailing whitespaces
+			nfc_Id = nfc_Id.rstrip().upper()
+			return nfc_Id
 		else:
 			raise Exception(f"Fail to read car UID: sw1={sw1}, sw2= {sw2}")
 
@@ -160,6 +164,11 @@ if __name__=="__main__":
 		if(uid is None):
 			continue
 		
+		if(uid == 'D3:76:A6:53'):
+			inside = sql.toggle_inside(uid)
+			ui.show_accepted_screen(inside)
+			ui.wait()
+
 		if(button_green.is_pressed and button_red.is_pressed):
 			sql.reset_inside()
 			ui.show_reset_screen()
