@@ -4,76 +4,31 @@ import datetime
 import sqlite3
 import tkinter as tk
 from gpiozero import Button
+from smartcard.System import readers
+from smartcard.util import toHexString
 
 from config import *
-from nfc import *
 
 class NFCReader():
 
-	def __init__(self):
-		# nfc_target structure
-		nt = nfc_target()
-		# nfc context structure
-		self.context = pointer(nfc_context())
+	def __innit__(self):
+		available_readers = readers()
+		if not available_readers:
+			raise Exception("No smart card readers found")
 
-		# initialize the driver and get the self.context
-		nfc_init(byref(self.context))
-
-		if self.context is None:
-			print("Unable to init libnfc (malloc)")
-			exit()
-
-		# open nfc driver using the contrext
-		pnd = nfc_open(self.context, None)
-
-		if pnd is None:
-			print("Unable to open NFC device")
-			nfc_exit(self.context)
-			exit()
-
-		# initialize the iniitator
-		if nfc_initiator_init(pnd) < 0:
-			nfc_perror(pnd, "nfc_initiator_init")
-			nfc_exit(self.context)
-			exit()
-			
-		# nfc_target structure
-		self.nt = nt
-		# device
-		self.pnd = pnd
-
-		# poll for a type A (MIFARE) tag
-		self.nmMifare = nfc_modulation()
-		self.nmMifare.nmt = NMT_ISO14443A
-		self.nmMifare.nbr = NBR_106
-
+		reader = available_readers[0]
+		self.connection = reader.createConnection()
+		self.connection.connect()
+	
 	def read_uid(self):
-		# poll for target tags: assume that there is only one
-		if nfc_initiator_select_passive_target(self.pnd, self.nmMifare,
-				None, 0, pointer(self.nt)) > 0:
 
-			# convert id number array into string
-			nfc_Id = "".join('{:02x}:'.format(self.nt.nti.nai.abtUid[i])
-					for i in range(self.nt.nti.nai.szUidLen))[:-1]
-			# get rid of trailing whitespaces
-			nfc_Id = nfc_Id.rstrip().upper()
+		SELECT = [0xFF, 0xCA, 0x00, 0x00, 0x00]
+		data, sw1, sw2 = self.connection.transmit(SELECT)
 
-			# now remember new id
-			return nfc_Id
-
-	def exit(self):
-		# close the device
-		nfc_close(self.pnd)
-		# release the context
-		nfc_exit(self.context)
-
-
-class RelayAction():
-	def __init__(self):
-		pass
-
-	def activateRelay(self, num):
-		pass
+		if(sw1, sw2) == (0x90, 0x00):
+			return toHexString(data)
+		else:
+			raise Exception(f"Fail to read car UID: sw1={sw1}, sw2= {sw2}")
 
 
 class SQL_Data():
@@ -189,7 +144,6 @@ class UI():
 
 if __name__=="__main__":
 	nfc_reader = NFCReader()
-	print('NFC reader: {} opened'.format(nfc_device_get_name(nfc_reader.pnd).decode()))
 
 	ui = UI()
 	sql = SQL_Data()
