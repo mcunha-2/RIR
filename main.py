@@ -44,7 +44,7 @@ class SQL_Data():
 
 	def check_uid_access(self, uid):
 		res = self.cur.execute("SELECT has_Access FROM access WHERE uid=(?)", (uid,)).fetchone()
-		return not(res is None) 
+		return not(res is None) and res != 0
 	
 	def check_if_uid_exists(self, uid):
 		res = self.cur.execute("SELECT uid FROM access WHERE uid=(?)", (uid,)).fetchone()
@@ -163,12 +163,6 @@ if __name__=="__main__":
 
 		if(uid is None):
 			continue
-		
-		if(uid == 'D3:76:A6:53'):
-			inside = sql.toggle_inside(uid)
-			ui.show_accepted_screen(inside)
-			ui.wait()
-
 		if(button_green.is_pressed and button_red.is_pressed):
 			sql.reset_inside()
 			ui.show_reset_screen()
