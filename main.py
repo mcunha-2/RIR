@@ -16,10 +16,11 @@ class NFCReader():
 		if not available_readers:
 			raise Exception("No smart card readers found")
 
-		reader = available_readers[0]
-		self.connection = reader.createConnection()
+		self.reader = available_readers[0]
 	
 	def read_uid(self):
+		self.connection = self.reader.createConnection()
+		
 		self.connection.connect()
 
 		SELECT = [0xFF, 0xCA, 0x00, 0x00, 0x00]
