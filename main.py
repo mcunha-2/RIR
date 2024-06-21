@@ -18,9 +18,9 @@ class NFCReader():
 
 		reader = available_readers[0]
 		self.connection = reader.createConnection()
-		self.connection.connect()
 	
 	def read_uid(self):
+		self.connection.connect()
 
 		SELECT = [0xFF, 0xCA, 0x00, 0x00, 0x00]
 		data, sw1, sw2 = self.connection.transmit(SELECT)
