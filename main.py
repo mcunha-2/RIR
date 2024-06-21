@@ -32,8 +32,6 @@ class NFCReader():
 			# get rid of trailing whitespaces
 			nfc_Id = nfc_Id.rstrip().upper()
 			return nfc_Id
-		else:
-			raise Exception(f"Fail to read car UID: sw1={sw1}, sw2= {sw2}")
 
 
 class SQL_Data():
