@@ -11,15 +11,15 @@ from config import *
 
 class NFCReader():
 
-	def __innit__(self):
+	def __init__(self):
 		available_readers = readers()
 		if not available_readers:
 			raise Exception("No smart card readers found")
 
 		self.reader = available_readers[0]
-	
-	def read_uid(self):
 		self.connection = self.reader.createConnection()
+
+	def read_uid(self):
 		
 		self.connection.connect()
 
