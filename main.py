@@ -139,6 +139,20 @@ class UI():
 		self.lbl.pack()
 		self.window.configure(background='blue')
 		
+	def show_interaction_screen(self, screen):
+		match screen:
+			case 1:
+				self.window.configure(background='blue')
+				self.lbl = tk.Label (self.window, height=self.h, text="ADD", bg="blue", fg="white", font="Mullish 100", anchor=tk.CENTER)
+			case 2:
+				self.window.configure(background='blue')
+				self.lbl = tk.Label (self.window, height=self.h, text="REMOVE", bg="blue", fg="white", font="Mullish 100", anchor=tk.CENTER)
+			case 3:
+				self.window.configure(background='blue')
+				self.lbl = tk.Label (self.window, height=self.h, text="RESET", bg="blue", fg="white", font="Mullish 100", anchor=tk.CENTER)
+			case _:
+				return
+		self.lbl.pack()
 
 	def wait(self):
 		var = tk.IntVar()
@@ -151,35 +165,40 @@ if __name__=="__main__":
 
 	ui = UI()
 	sql = SQL_Data()
-	button_red = Button(16)
 	button_green = Button(6)
 
 	while(True):
 		ui.window.update_idletasks()
 		ui.window.update()
-		ui.show_main_screen()
+		if (count == 0):
+			ui.show_main_screen()
 		
 		uid = nfc_reader.read_uid()
 
 		if(uid is None):
 			continue
-		if(button_green.is_pressed and button_red.is_pressed):
-			sql.reset_inside()
-			ui.show_reset_screen()
-			ui.wait()
-			continue
-		if(button_green.is_pressed):
-			if(not sql.check_if_uid_exists(uid)):
-				sql.add_uid(uid)
-			else:
-				sql.toggle_access(uid, 1)
-			sql.log_access(uid, 2)
-			ui.show_access_screen(True)
-			ui.wait()
-			continue
-		if(button_red.is_pressed):
-			sql.toggle_access(uid, 0)
-			ui.show_access_screen(False)
+		if(uid == MASTER_KEY):
+			if(count == 3):
+				count = 0
+				continue
+			count += 1
+			ui.show_interaction_screen(count)
+		if(count != 0):
+			match count:
+				case 1:
+					if(not sql.check_if_uid_exists(uid)):
+						sql.add_uid(uid)
+					else:
+						sql.toggle_access(uid, 1)
+					sql.log_access(uid, 2)
+					ui.show_access_screen(True)
+				case 2:
+					sql.toggle_access(uid, 0)
+					ui.show_access_screen(False)
+				case 3:
+					sql.reset_inside()
+					ui.show_reset_screen()
+			count = 0
 			ui.wait()
 			continue
 		if(not(sql.check_uid_access(uid))):
