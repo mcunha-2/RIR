@@ -165,8 +165,8 @@ if __name__=="__main__":
 
 	ui = UI()
 	sql = SQL_Data()
-	button_green = Button(6)
-
+	count = 0
+	
 	while(True):
 		ui.window.update_idletasks()
 		ui.window.update()
