@@ -183,6 +183,8 @@ if __name__=="__main__":
 				continue
 			count += 1
 			ui.show_interaction_screen(count)
+			ui.wait()
+			continue
 		if(count != 0):
 			match count:
 				case 1:
