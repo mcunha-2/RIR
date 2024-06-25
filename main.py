@@ -32,6 +32,7 @@ class NFCReader():
 					for i in range(len(data)))[:-1]
 			# get rid of trailing whitespaces
 			nfc_Id = nfc_Id.rstrip().upper()
+			print(nfc_Id)
 			return nfc_Id
 
 
@@ -98,9 +99,9 @@ class UI():
 		# setting attribute
 		self.window.config(cursor="none")
 		self.window.overrideredirect(True)
-		self.window.attributes('-fullscreen', True)
-		w, self.h = self.window.maxsize()
-		self.window.geometry(f'{w+20}x{self.h+30}+0+0')
+		#self.window.attributes('-fullscreen', True)
+		#w, self.h = self.window.maxsize()
+		#self.window.geometry(f'{w+20}x{self.h+30}+0+0')
 		self.lbl = tk.Label()
 		self.show_main_screen()
 
@@ -156,8 +157,6 @@ class UI():
 
 	def wait(self):
 		var = tk.IntVar()
-		self.window.update_idletasks()
-		self.window.update()
 		self.window.after(WAIT_TIME, var.set, 1)
 		self.window.wait_variable(var)
 
