@@ -156,6 +156,8 @@ class UI():
 
 	def wait(self):
 		var = tk.IntVar()
+		self.window.update_idletasks()
+		self.window.update()
 		self.window.after(WAIT_TIME, var.set, 1)
 		self.window.wait_variable(var)
 
