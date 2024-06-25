@@ -177,7 +177,7 @@ if __name__=="__main__":
 
 		if(uid is None):
 			continue
-		ui.lbl.destroy()
+		ui.show_main_screen()
 		if(uid == MASTER_KEY):
 			if(count == 4):
 				count = 0
