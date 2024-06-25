@@ -180,10 +180,10 @@ if __name__=="__main__":
 			continue
 		ui.show_main_screen()
 		if(uid == MASTER_KEY):
+			count += 1
 			if(count == 4):
 				count = 0
 				continue
-			count += 1
 			ui.show_interaction_screen(count)
 			ui.wait()
 			continue
