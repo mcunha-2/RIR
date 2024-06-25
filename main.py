@@ -100,7 +100,7 @@ class UI():
 		self.window.config(cursor="none")
 		self.window.overrideredirect(True)
 		#self.window.attributes('-fullscreen', True)
-		#w, self.h = self.window.maxsize()
+		w, self.h = self.window.maxsize()
 		#self.window.geometry(f'{w+20}x{self.h+30}+0+0')
 		self.lbl = tk.Label()
 		self.show_main_screen()
