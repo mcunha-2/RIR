@@ -100,8 +100,10 @@ class UI():
 		self.window.config(cursor="none")
 		self.window.overrideredirect(True)
 		self.window.attributes('-fullscreen', True)
-		w, self.h = self.window.maxsize()
-		self.window.geometry(f'{w+20}x{self.h+30}+0+0')
+		self.w, self.h = self.window.maxsize()
+		self.w += 20
+		self.h += 30
+		self.window.geometry(f'{self.w}x{self.h}+0+0')
 		self.lbl = tk.Label()
 		self.show_main_screen()
 
@@ -112,31 +114,31 @@ class UI():
 	def show_accepted_screen(self, inside):
 		self.window.configure(background='lime')
 		if(inside):
-			self.lbl = tk.Label (self.window, height=self.h, text="EXIT", bg="lime", fg="white", font="Mullish 100", anchor=tk.CENTER)
+			self.lbl = tk.Label (self.window, width=self.w, height=self.h, text="EXIT", bg="lime", fg="white", font="Mullish 100", anchor=tk.CENTER)
 		else:
-			self.lbl = tk.Label (self.window, height=self.h, text="GO", bg="lime", fg="white", font="Mullish 100", anchor=tk.CENTER)
+			self.lbl = tk.Label (self.window, width=self.w, height=self.h, text="GO", bg="lime", fg="white", font="Mullish 100", anchor=tk.CENTER)
 		self.lbl.pack()
 
 	def show_rejected_screen(self, full, same_day):
 		self.window.configure(background='#ff2c00')
 		if(full):
-			self.lbl = tk.Label (self.window, height=self.h, text="STAND\nFULL", bg="#ff2c00", fg="white", font="Mullish 100", anchor=tk.CENTER)
+			self.lbl = tk.Label (self.window, width=self.w, height=self.h, text="STAND\nFULL", bg="#ff2c00", fg="white", font="Mullish 100", anchor=tk.CENTER)
 		elif(same_day):
-			self.lbl = tk.Label (self.window, height=self.h, text="COME\nBACK\nNEXT\nDAY", bg="#ff2c00", fg="white", font="Mullish 100", anchor=tk.CENTER)
+			self.lbl = tk.Label (self.window, width=self.w, height=self.h, text="COME\nBACK\nNEXT\nDAY", bg="#ff2c00", fg="white", font="Mullish 100", anchor=tk.CENTER)
 		else:
-			self.lbl = tk.Label (self.window, height=self.h, text="NO\nACCESS", bg="#ff2c00", fg="white", font="Mullish 100", anchor=tk.CENTER)
+			self.lbl = tk.Label (self.window, width=self.w, height=self.h, text="NO\nACCESS", bg="#ff2c00", fg="white", font="Mullish 100", anchor=tk.CENTER)
 		self.lbl.pack()
 
 	def show_access_screen(self, add):
 		if(add): 
-			self.lbl = tk.Label (self.window, height=self.h, text="\u2714", bg="blue", fg="white", font="Mullish 300", anchor=tk.CENTER)
+			self.lbl = tk.Label (self.window, width=self.w, height=self.h, text="\u2714", bg="blue", fg="white", font="Mullish 300", anchor=tk.CENTER)
 		else:
-			self.lbl = tk.Label (self.window, height=self.h, text="\u274C", bg="blue", fg="white", font="Mullish 300", anchor=tk.CENTER)
+			self.lbl = tk.Label (self.window, width=self.w, height=self.h, text="\u274C", bg="blue", fg="white", font="Mullish 300", anchor=tk.CENTER)
 		self.lbl.pack()
 		self.window.configure(background='blue')
 
 	def show_reset_screen(self):
-		self.lbl = tk.Label (self.window, height=self.h, text="RESET", bg="blue", fg="white", font="Mullish 100", anchor=tk.CENTER)
+		self.lbl = tk.Label (self.window, width=self.w, height=self.h, text="RESET", bg="blue", fg="white", font="Mullish 100", anchor=tk.CENTER)
 		self.lbl.pack()
 		self.window.configure(background='blue')
 		
@@ -144,13 +146,13 @@ class UI():
 		match screen:
 			case 1:
 				self.window.configure(background='blue')
-				self.lbl = tk.Label (self.window, height=self.h, text="ADD", bg="blue", fg="white", font="Mullish 100", anchor=tk.CENTER)
+				self.lbl = tk.Label (self.window, width=self.w, height=self.h, text="ADD", bg="blue", fg="white", font="Mullish 100", anchor=tk.CENTER)
 			case 2:
 				self.window.configure(background='blue')
-				self.lbl = tk.Label (self.window, height=self.h, text="REMOVE", bg="blue", fg="white", font="Mullish 100", anchor=tk.CENTER)
+				self.lbl = tk.Label (self.window, width=self.w, height=self.h, text="REMOVE", bg="blue", fg="white", font="Mullish 100", anchor=tk.CENTER)
 			case 3:
 				self.window.configure(background='blue')
-				self.lbl = tk.Label (self.window, height=self.h, text="RESET", bg="blue", fg="white", font="Mullish 100", anchor=tk.CENTER)
+				self.lbl = tk.Label (self.window, width=self.w, height=self.h, text="RESET", bg="blue", fg="white", font="Mullish 100", anchor=tk.CENTER)
 			case _:
 				return
 		self.lbl.pack()
