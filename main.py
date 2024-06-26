@@ -179,8 +179,7 @@ if __name__=="__main__":
 		if(uid is None or last_uid == uid):
 			last_uid = uid
 			continue
-
-		ui.show_main_screen()
+		ui.lbl.destroy()
 		last_uid = uid
 		if(uid == MASTER_KEY):
 			count += 1
@@ -189,6 +188,7 @@ if __name__=="__main__":
 				continue
 			ui.show_interaction_screen(count)
 			continue
+		ui.show_main_screen()
 		if(count != 0):
 			match count:
 				case 1:
