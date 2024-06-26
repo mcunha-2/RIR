@@ -129,19 +129,11 @@ class UI():
 			self.lbl = tk.Label (self.window, width=self.w, height=self.h, text="NO\nACCESS", bg="#ff2c00", fg="white", font="Mullish 100", anchor=tk.CENTER)
 		self.lbl.pack()
 
-	def show_access_screen(self, add):
-		if(add): 
-			self.lbl = tk.Label (self.window, width=self.w, height=self.h, text="\u2714", bg="blue", fg="white", font="Mullish 300", anchor=tk.CENTER)
-		else:
-			self.lbl = tk.Label (self.window, width=self.w, height=self.h, text="\u274C", bg="blue", fg="white", font="Mullish 300", anchor=tk.CENTER)
+	def show_access_screen(self):
+		self.lbl = tk.Label (self.window, width=self.w, height=self.h, text="\u2714", bg="blue", fg="white", font="Mullish 300", anchor=tk.CENTER)
 		self.lbl.pack()
 		self.window.configure(background='blue')
 
-	def show_reset_screen(self):
-		self.lbl = tk.Label (self.window, width=self.w, height=self.h, text="RESET", bg="blue", fg="white", font="Mullish 100", anchor=tk.CENTER)
-		self.lbl.pack()
-		self.window.configure(background='blue')
-		
 	def show_interaction_screen(self, screen):
 		match screen:
 			case 1:
@@ -196,13 +188,13 @@ if __name__=="__main__":
 					else:
 						sql.toggle_access(uid, 1)
 					sql.log_access(uid, 2)
-					ui.show_access_screen(True)
+					ui.show_access_screen()
 				case 2:
 					sql.toggle_access(uid, 0)
-					ui.show_access_screen(False)
+					ui.show_access_screen()
 				case 3:
 					sql.reset_inside()
-					ui.show_reset_screen()
+					ui.show_access_screen()
 			count = 0
 			ui.wait()
 			ui.show_main_screen()
