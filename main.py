@@ -175,7 +175,10 @@ if __name__=="__main__":
 		uid = nfc_reader.read_uid()
 
 		if(uid is None or last_uid == uid):
+			last_uid = uid
 			continue
+
+		last_uid = uid
 		ui.show_main_screen()
 		if(uid == MASTER_KEY):
 			count += 1
