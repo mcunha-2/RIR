@@ -183,6 +183,7 @@ if __name__=="__main__":
 			count += 1
 			if(count == 4):
 				count = 0
+				ui.show_main_screen()
 				continue
 			ui.show_interaction_screen(count)
 			continue
