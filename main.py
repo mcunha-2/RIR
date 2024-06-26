@@ -145,13 +145,10 @@ class UI():
 	def show_interaction_screen(self, screen):
 		match screen:
 			case 1:
-				self.window.configure(background='blue')
 				self.lbl = tk.Label (self.window, width=self.w, height=self.h, text="ADD", bg="blue", fg="white", font="Mullish 100", anchor=tk.CENTER)
 			case 2:
-				self.window.configure(background='blue')
 				self.lbl = tk.Label (self.window, width=self.w, height=self.h, text="REMOVE", bg="blue", fg="white", font="Mullish 100", anchor=tk.CENTER)
 			case 3:
-				self.window.configure(background='blue')
 				self.lbl = tk.Label (self.window, width=self.w, height=self.h, text="RESET", bg="blue", fg="white", font="Mullish 100", anchor=tk.CENTER)
 			case _:
 				return
