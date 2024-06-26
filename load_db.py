@@ -48,12 +48,18 @@ def load_db(csv_file_path):
 		
 		# Iterate over the rows in the CSV file
 		for row in csvreader:
-			uid = row
+			uid = row[0]
+			print (uid)
+			uid = uid[:2] + ':' + uid[2:]
+			uid = uid[:5] + ':' + uid[5:]
+			uid = uid[:8] + ':' + uid[8:]
+			print (uid)
+
 			# Insert the data into the access table
 			cursor.execute("""
 			INSERT INTO access (uid, has_Access, is_inside) 
 			VALUES (?, 1, 0)
-			""", (uid))
+			""", (uid,))
 
 	# Commit the transaction
 	conn.commit()
