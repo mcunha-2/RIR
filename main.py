@@ -167,14 +167,14 @@ if __name__=="__main__":
 	ui = UI()
 	sql = SQL_Data()
 	count = 0
-	
+	last_uid = ''
 	while(True):
 		ui.window.update_idletasks()
 		ui.window.update()
 		
 		uid = nfc_reader.read_uid()
 
-		if(uid is None):
+		if(uid is None or last_uid == uid):
 			continue
 		ui.show_main_screen()
 		if(uid == MASTER_KEY):
@@ -183,7 +183,6 @@ if __name__=="__main__":
 				count = 0
 				continue
 			ui.show_interaction_screen(count)
-			ui.wait()
 			continue
 		if(count != 0):
 			match count:
@@ -202,6 +201,7 @@ if __name__=="__main__":
 					ui.show_reset_screen()
 			count = 0
 			ui.wait()
+			ui.show_main_screen()
 			continue
 		if(not(sql.check_uid_access(uid))):
 			ui.show_rejected_screen(0, 0)
