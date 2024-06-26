@@ -171,8 +171,6 @@ if __name__=="__main__":
 	while(True):
 		ui.window.update_idletasks()
 		ui.window.update()
-		if (count == 0):
-			ui.show_main_screen()
 		
 		uid = nfc_reader.read_uid()
 
@@ -208,19 +206,23 @@ if __name__=="__main__":
 		if(not(sql.check_uid_access(uid))):
 			ui.show_rejected_screen(0, 0)
 			ui.wait()
+			ui.show_main_screen()
 			continue
 		if(sql.check_if_inside(uid)):
 			inside = sql.toggle_inside(uid)
 			ui.show_accepted_screen(inside)
 			ui.wait()
+			ui.show_main_screen()
 			continue
 		if(sql.check_same_day_access(uid)):
 			ui.show_rejected_screen(0, 1)
 			ui.wait()
+			ui.show_main_screen()
 			continue
 		if(not(sql.has_available_space())):
 			ui.show_rejected_screen(1, 0)
 			ui.wait()
+			ui.show_main_screen()
 			continue
 		
 
@@ -228,3 +230,4 @@ if __name__=="__main__":
 		ui.show_accepted_screen(inside)
 
 		ui.wait()
+		ui.show_main_screen()
