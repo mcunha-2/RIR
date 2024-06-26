@@ -3,7 +3,6 @@
 import datetime
 import sqlite3
 import tkinter as tk
-from gpiozero import Button
 from smartcard.System import readers
 from smartcard.util import toHexString
 
@@ -22,18 +21,19 @@ class NFCReader():
 	def read_uid(self):
 		try:
 			self.connection.connect()
+
+			SELECT = [0xFF, 0xCA, 0x00, 0x00, 0x00]
+			data, sw1, sw2 = self.connection.transmit(SELECT)
+
+			if(sw1, sw2) == (0x90, 0x00):
+				nfc_Id = "".join('{:02x}:'.format(data[i])
+						for i in range(len(data)))[:-1]
+				# get rid of trailing whitespaces
+				nfc_Id = nfc_Id.rstrip().upper()
+				print(nfc_Id)
+				return nfc_Id
 		except:
 			return
-		SELECT = [0xFF, 0xCA, 0x00, 0x00, 0x00]
-		data, sw1, sw2 = self.connection.transmit(SELECT)
-
-		if(sw1, sw2) == (0x90, 0x00):
-			nfc_Id = "".join('{:02x}:'.format(data[i])
-					for i in range(len(data)))[:-1]
-			# get rid of trailing whitespaces
-			nfc_Id = nfc_Id.rstrip().upper()
-			print(nfc_Id)
-			return nfc_Id
 
 
 class SQL_Data():
@@ -178,8 +178,8 @@ if __name__=="__main__":
 			last_uid = uid
 			continue
 
-		last_uid = uid
 		ui.show_main_screen()
+		last_uid = uid
 		if(uid == MASTER_KEY):
 			count += 1
 			if(count == 4):
