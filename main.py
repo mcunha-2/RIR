@@ -153,6 +153,7 @@ class UI():
 			case _:
 				return
 		self.lbl.pack()
+		self.window.configure(background='blue')
 
 	def wait(self):
 		var = tk.IntVar()
