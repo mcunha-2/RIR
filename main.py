@@ -45,7 +45,7 @@ class SQL_Data():
 
 	def check_uid_access(self, uid):
 		res = self.cur.execute("SELECT has_Access FROM access WHERE uid=(?)", (uid,)).fetchone()
-		return not(res is None) and res[0] != 0
+		return not(res is None)
 	
 	def check_if_uid_exists(self, uid):
 		res = self.cur.execute("SELECT uid FROM access WHERE uid=(?)", (uid,)).fetchone()
